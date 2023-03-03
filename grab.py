@@ -2,6 +2,7 @@ import requests
 import random
 import os
 import sys
+import io
 
 samples = 100
 id_range = (1, 150000)
@@ -15,15 +16,15 @@ def rng():
 
 for i in range(samples):
     while True:
-        id = rng()
-        filepath = f'out/album/{id}.json'
+        id = str(rng())
+        filepath = 'out/album/' + id + '.json'
         if not os.path.exists(filepath):
             break
     try:
-        r = requests.get(f'http://0.0.0.0:9990/album/{id}?foramt=json')
-        with open(f'out/album/{id}.json', 'w', encoding='utf-8') as f:
+        r = requests.get('http://0.0.0.0:9990/album/' + id + '?foramt=json')
+        with io.open(filepath, 'w', encoding='utf-8') as f:
             f.write(r.content.decode('utf-8'))
     except Exception as e:
-        print(f'error at id {id}: {e}')
+        print('error at id ' + id + ':' + str(e))
 
 
