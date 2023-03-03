@@ -20,6 +20,8 @@ jobs:
         python-version: '2.7'
     - name: Create temp directory
       run: mkdir temp
+    - name: Create out directory
+      run: mkdir -p out/album
     - name: Checkout hufman/vgmdb
       uses: actions/checkout@v3.3.0
       with:
