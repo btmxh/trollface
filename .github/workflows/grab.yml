@@ -26,7 +26,7 @@ jobs:
         repository: 'hufman/vgmdb'
         path: temp/vgmdb
     - name: Install python dependencies
-      run: pip install -r temp/vgmdb/requirements.txt requirements.txt
+      run: pip install -r temp/vgmdb/requirements.txt -r requirements.txt
     - name: Run vgmdb API server
       run: python run.py &
       working-directory: temp/vgmdb
