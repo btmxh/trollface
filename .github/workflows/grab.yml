@@ -1,0 +1,42 @@
+name: feeds the swarm
+
+on:
+  workflow-dispatch:
+    inputs:
+      gamer:
+        description: 'Number of gaming materials'
+        required: true
+        default: '100'
+
+jobs:
+  feed:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v3.3.0
+    - name: Setup Python 2.7
+      uses: actions/setup-python@v4
+      with:
+        python-version: '2.7'
+        cache: 'pip'
+    - name: Create temp directory
+      run: mkdir temp
+    - name: Checkout hufman/vgmdb
+      uses: actions/checkout@v3.3.0
+      with:
+        repository: 'hufman/vgmdb'
+        path: temp/vgmdb
+    - name: Install vgmdb python dependencies
+      run: pip install -r temp/vgmdb/requirements.txt
+    - name: Run vgmdb API server
+      run: python run.py &
+      working-directory: temp/vgmdb
+    - name: Gaming
+      run: python grab.py ${{ github.event.inputs.gamer }}"
+    - name: Zip output
+      run: zip -r temp/albums.zip out/album
+    - name: Upload gaming results
+      uses: actions/upload-artifact@v3
+      with:
+        name: kekwing
+        path: temp/albums.zip
