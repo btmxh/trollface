@@ -34,10 +34,8 @@ jobs:
       working-directory: temp/vgmdb
     - name: Gaming
       run: python grab.py ${{ github.event.inputs.gamer }}
-    - name: Zip output
-      run: zip -r temp/albums.zip out/album
     - name: Upload gaming results
       uses: actions/upload-artifact@v3
       with:
         name: kekwing
-        path: temp/albums.zip
+        path: out/album

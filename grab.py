@@ -21,7 +21,8 @@ for i in range(samples):
         if not os.path.exists(filepath):
             break
     try:
-        r = requests.get('http://0.0.0.0:9990/album/' + id + '?foramt=json')
+        r = requests.get('http://0.0.0.0:9990/album/' + id + '?format=json')
+        r.raise_for_status()
         with io.open(filepath, 'w', encoding='utf-8') as f:
             f.write(r.content.decode('utf-8'))
     except Exception as e:
